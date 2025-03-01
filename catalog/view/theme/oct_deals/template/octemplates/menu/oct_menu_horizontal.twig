@@ -1,0 +1,504 @@
+{% if oct_menu %}
+    <ul class="ds-menu-maincategories d-flex flex-column flex-xl-row">
+        {% for oct_category in oct_menu %}
+            <li class="ds-menu-maincategories-item d-flex align-items-center py-2 px-3 px-xl-2">
+                {% if oct_category.oct_image %}
+                    <span class="d-inline-flex align-items-center">
+                        <img class="ds-menu-catalog-item-img" src="{{ oct_category.oct_image }}" alt="{{ oct_category.name }}" width="20" height="20" loading="lazy">
+                        {% if oct_category.href %}
+                            <a href="{{ oct_category.href }}" {{ oct_category.target }} class="ds-menu-maincategories-item-title fsz-14 dark-text fw-500 ms-2">{{ oct_category.name }}</a>
+                        {% else %}
+                            <span class="ds-menu-maincategories-item-title fsz-14 dark-text fw-500 ms-2">{{ oct_category.name }}</span>
+                        {% endif %}
+                    </span>
+                {% else %}
+                    {% if oct_category.href %}
+                        <a href="{{ oct_category.href }}" {{ oct_category.target }} class="ds-menu-maincategories-item-title fsz-14 dark-text fw-500">{{ oct_category.name }}</a>
+                    {% else %}
+                        <span class="ds-menu-maincategories-item-title fsz-14 dark-text fw-500 ms-2">{{ oct_category.name }}</span>
+                    {% endif %}
+                {% endif %}
+                {% if oct_category.children or oct_category.oct_pages %}
+                    <svg class="ms-2" width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.24923 10.1022C1.05723 10.1022 0.865201 10.0292 0.719201 9.88223C0.426201 9.58923 0.426201 9.11419 0.719201 8.82119L4.18917 5.35122L0.719201 1.88125C0.426201 1.58825 0.426201 1.11321 0.719201 0.820214C1.0122 0.527214 1.48724 0.527214 1.78024 0.820214L5.78024 4.82021C6.07324 5.11321 6.07324 5.58825 5.78024 5.88125L1.78024 9.88125C1.63324 10.0292 1.44123 10.1022 1.24923 10.1022Z"
+                            fill="#003459"></path>
+                    </svg>
+                {% endif %}
+                {% if (oct_category.children or oct_category.oct_pages) and oct_category.type == 'standard' %}
+                    <div class="ds-menu-catalog{% if oct_category.view == '2' %} ds-menu-catalog-wide{% endif %}">
+                        {% if oct_category.view == '1' %}
+                            <div class="ds-menu-catalog-inner">
+                                <ul class="ds-menu-catalog-items">
+                                    {% for child in oct_category.children %}
+                                        <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                            <a href="{{ child.href }}">{{ child.name }}</a>
+                                            {% if child.children or child.oct_pages %}
+                                                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.24923 10.1022C1.05723 10.1022 0.865201 10.0292 0.719201 9.88223C0.426201 9.58923 0.426201 9.11419 0.719201 8.82119L4.18917 5.35122L0.719201 1.88125C0.426201 1.58825 0.426201 1.11321 0.719201 0.820214C1.0122 0.527214 1.48724 0.527214 1.78024 0.820214L5.78024 4.82021C6.07324 5.11321 6.07324 5.58825 5.78024 5.88125L1.78024 9.88125C1.63324 10.0292 1.44123 10.1022 1.24923 10.1022Z"
+                                                        fill="#003459"></path>
+                                                </svg>
+                                                <div class="ds-menu-catalog">
+                                                    <div class="ds-menu-catalog-inner">
+                                                        <ul class="ds-menu-catalog-items">
+                                                            {% for ch in child.children %}
+                                                                <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                                                    <a href="{{ ch.href }}">{{ ch.name }}</a>
+                                                                    {% if ch.children or ch.oct_pages %}
+                                                                        <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M1.24923 10.1022C1.05723 10.1022 0.865201 10.0292 0.719201 9.88223C0.426201 9.58923 0.426201 9.11419 0.719201 8.82119L4.18917 5.35122L0.719201 1.88125C0.426201 1.58825 0.426201 1.11321 0.719201 0.820214C1.0122 0.527214 1.48724 0.527214 1.78024 0.820214L5.78024 4.82021C6.07324 5.11321 6.07324 5.58825 5.78024 5.88125L1.78024 9.88125C1.63324 10.0292 1.44123 10.1022 1.24923 10.1022Z"
+                                                                                fill="#003459"></path>
+                                                                        </svg>
+                                                                        <div class="ds-menu-catalog">
+                                                                            <div class="ds-menu-catalog-inner">
+                                                                                <ul class="ds-menu-catalog-items">
+                                                                                    {% for child in ch.children %}
+                                                                                        <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                                                                            <a href="{{ child.href }}">
+                                                                                                {{ child.name }}
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    {% endfor %}
+                                                                                    {% if ch.oct_pages %}
+                                                                                        <li class="ds-menu-list-landings">
+                                                                                            <ul>
+                                                                                                {% for oct_page in ch.oct_pages %}
+                                                                                                    {% if oct_page.page_links is not empty %}
+                                                                                                    <li class="d-flex flex-column ">
+                                                                                                        <span class="ds-megamenu-children-title fw-700 mb-2">{{ oct_page.page_group[language_id] }}</span>
+                                                                                                        {% for page_link in oct_page.page_links %}
+                                                                                                        <a href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}" class="ds-menu-list-landings-link fsz-14">{{ page_link[language_id].title }}</a>
+                                                                                                        {% endfor %}
+                                                                                                    </li>
+                                                                                                    {% endif %}
+                                                                                                {% endfor %}
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    {% endif %}
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </li>
+                                                            {% endfor %}
+                                                            {% if child.oct_pages %}
+                                                                <li class="ds-menu-list-landings">
+                                                                    <ul>
+                                                                        {% for oct_page in child.oct_pages %}
+                                                                            {% if oct_page.page_links is not empty %}
+                                                                            <li class="d-flex flex-column">
+                                                                                <span class="ds-megamenu-children-title fw-700 mb-2">{{ oct_page.page_group[language_id] }}</span>
+                                                                                {% for page_link in oct_page.page_links %}
+                                                                                <a href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}" class="ds-menu-list-landings-link fsz-14">{{ page_link[language_id].title }}</a>
+                                                                                {% endfor %}
+                                                                            </li>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </li>
+                                                            {% endif %}
+                                                        </ul>
+                                                    </div>
+                                            </div>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                    {% if oct_category.oct_pages %}
+                                        <li class="ds-menu-list-landings">
+                                            <ul>
+                                                {% for oct_page in oct_category.oct_pages %}
+                                                    {% if oct_page.page_links is not empty %}
+                                                    <li class="d-flex flex-column">
+                                                        <span class="ds-megamenu-children-title fw-700 mb-2">{{ oct_page.page_group[language_id] }}</span>
+                                                        {% for page_link in oct_page.page_links %}
+                                                        <a href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}" class="ds-menu-list-landings-link fsz-14">{{ page_link[language_id].title }}</a>
+                                                        {% endfor %}
+                                                    </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% elseif oct_category.view == '2' %}
+                            <div class="ds-megamenu-child-wrapper">
+                                <div class="ds-megamenu-child-title fw-700 fsz-20 dark-text mb-4">{{ oct_category.name }}</div>
+                                <div class="d-flex">
+                                    <div class="ds-megamenu-children flex-grow-1 flex-column flex-xl-row">
+                                        {% if oct_category.oct_pages %}
+                                            <div class="ds-megamenu-children-item">
+                                                {% for oct_page in oct_category.oct_pages %}
+                                                    {% if oct_page.page_links is not empty %}
+                                                        <span class="ds-megamenu-children-title fw-700">{{ oct_page.page_group[language_id] }}</span>
+                                                        <ul class="list-unstyled fsz-14">
+                                                            {% for page_link in oct_page.page_links %}
+                                                            <li>
+                                                                <a href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}">{{ page_link[language_id].title }}</a>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        {% if oct_category.children %}
+                                            {% for child in oct_category.children %}
+                                                <div class="ds-megamenu-children-item">
+                                                    <a href="{{ child.href }}" title="{{ child.name }}" class="ds-megamenu-children-title fw-700">{{ child.name }}</a>
+                                                    {% if child.children %}
+                                                        <ul class="list-unstyled fsz-14">
+                                                            {% for ch in child.children %}
+                                                            <li>
+                                                                <a href="{{ ch.href }}" title="{{ ch.name }}">{{ ch.name }}</a>
+                                                            </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if oct_category.children and oct_category.type == 'category' %}
+                    <div class="ds-menu-maincategories-dropdown position-absolute{% if oct_category.view == '1' %} ds-menu-maincategories-dropdown-narrow{% endif %}">
+                        <div class="ds-sidebar-header d-flex align-items-center justify-content-between py-2 px-3 d-xl-none">
+                            <div class="ds-sidebar-header-back fw-700 dark-text fsz-16 d-flex align-items-center" data-sidebar="catalogback">
+                                <svg class="me-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.4979 4.9994C17.4979 5.4134 17.1619 5.7494 16.7479 5.7494H2.55895L5.27892 8.46937C5.57192 8.76237 5.57192 9.2374 5.27892 9.5304C5.13292 9.6764 4.94089 9.75037 4.74889 9.75037C4.55689 9.75037 4.36487 9.6774 4.21887 9.5304L0.218865 5.5304C0.149865 5.4614 0.095 5.37851 0.057 5.28651C-0.019 5.10351 -0.019 4.89651 0.057 4.71351C0.095 4.62151 0.149865 4.53837 0.218865 4.46937L4.21887 0.469369C4.51187 0.176369 4.9869 0.176369 5.2799 0.469369C5.5729 0.762369 5.5729 1.2374 5.2799 1.5304L2.55993 4.25037H16.7479C17.1619 4.24937 17.4979 4.5854 17.4979 4.9994Z"
+                                        fill="#00171F" />
+                                </svg>
+                                {{ oct_category.name }}
+                            </div>
+                            <button type="button" class="button button-light br-10 ds-sidebar-close" data-sidebar="catalogclose" aria-label="Close">
+                                <svg class="me-0" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.8029 10.8616C12.0633 11.122 12.0633 11.5442 11.8029 11.8046C11.6731 11.9344 11.5025 12.0001 11.3319 12.0001C11.1612 12.0001 10.9906 11.9352 10.8608 11.8046L5.99911 6.94288L1.13743 11.8046C1.00766 11.9344 0.837017 12.0001 0.666369 12.0001C0.495722 12.0001 0.325075 11.9352 0.195312 11.8046C-0.0651039 11.5442 -0.0651039 11.122 0.195312 10.8616L5.057 5.9999L0.195312 1.13824C-0.0651039 0.877827 -0.0651039 0.45562 0.195312 0.195205C0.455727 -0.0652107 0.877907 -0.0652107 1.13832 0.195205L6.00001 5.05692L10.8617 0.195205C11.1221 -0.0652107 11.5443 -0.0652107 11.8047 0.195205C12.0651 0.45562 12.0651 0.877827 11.8047 1.13824L6.943 5.9999L11.8029 10.8616Z"
+                                        fill="#00A8E8" />
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- 1 = menu list, 2 = menu grid -->
+                        {% if oct_category.view == '1' %}
+                            <div class="ds-menu-catalog-inner">
+                                <ul class="ds-menu-catalog-items">
+                                    {% for child in oct_category.children %}
+                                        <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                            <a href="{{ child.href }}">{{ child.name }}</a>
+                                            {% if child.children or child.oct_pages %}
+                                                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.24923 10.1022C1.05723 10.1022 0.865201 10.0292 0.719201 9.88223C0.426201 9.58923 0.426201 9.11419 0.719201 8.82119L4.18917 5.35122L0.719201 1.88125C0.426201 1.58825 0.426201 1.11321 0.719201 0.820214C1.0122 0.527214 1.48724 0.527214 1.78024 0.820214L5.78024 4.82021C6.07324 5.11321 6.07324 5.58825 5.78024 5.88125L1.78024 9.88125C1.63324 10.0292 1.44123 10.1022 1.24923 10.1022Z"
+                                                        fill="#003459"></path>
+                                                </svg>
+                                                <div class="ds-menu-catalog">
+                                                    <div class="ds-sidebar-header d-flex align-items-center justify-content-between py-2 px-3 d-xl-none">
+                                                        <div class="ds-sidebar-header-back fw-700 dark-text fsz-16 d-flex align-items-center" data-sidebar="catalogback">
+                                                            <svg class="me-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M17.4979 4.9994C17.4979 5.4134 17.1619 5.7494 16.7479 5.7494H2.55895L5.27892 8.46937C5.57192 8.76237 5.57192 9.2374 5.27892 9.5304C5.13292 9.6764 4.94089 9.75037 4.74889 9.75037C4.55689 9.75037 4.36487 9.6774 4.21887 9.5304L0.218865 5.5304C0.149865 5.4614 0.095 5.37851 0.057 5.28651C-0.019 5.10351 -0.019 4.89651 0.057 4.71351C0.095 4.62151 0.149865 4.53837 0.218865 4.46937L4.21887 0.469369C4.51187 0.176369 4.9869 0.176369 5.2799 0.469369C5.5729 0.762369 5.5729 1.2374 5.2799 1.5304L2.55993 4.25037H16.7479C17.1619 4.24937 17.4979 4.5854 17.4979 4.9994Z"
+                                                                    fill="#00171F" />
+                                                            </svg>
+                                                            {{ child.name }}
+                                                        </div>
+                                                        <button type="button" class="button button-light br-10 ds-sidebar-close" data-sidebar="catalogclose" aria-label="Close">
+                                                            <svg class="me-0" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M11.8029 10.8616C12.0633 11.122 12.0633 11.5442 11.8029 11.8046C11.6731 11.9344 11.5025 12.0001 11.3319 12.0001C11.1612 12.0001 10.9906 11.9352 10.8608 11.8046L5.99911 6.94288L1.13743 11.8046C1.00766 11.9344 0.837017 12.0001 0.666369 12.0001C0.495722 12.0001 0.325075 11.9352 0.195312 11.8046C-0.0651039 11.5442 -0.0651039 11.122 0.195312 10.8616L5.057 5.9999L0.195312 1.13824C-0.0651039 0.877827 -0.0651039 0.45562 0.195312 0.195205C0.455727 -0.0652107 0.877907 -0.0652107 1.13832 0.195205L6.00001 5.05692L10.8617 0.195205C11.1221 -0.0652107 11.5443 -0.0652107 11.8047 0.195205C12.0651 0.45562 12.0651 0.877827 11.8047 1.13824L6.943 5.9999L11.8029 10.8616Z"
+                                                                    fill="#00A8E8" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="ds-menu-catalog-inner">
+                                                        <ul class="ds-menu-catalog-items">
+                                                            {% for ch in child.children %}
+                                                                <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                                                    <a href="{{ ch.href }}">{{ ch.name }}</a>
+                                                                    {% if ch.children or ch.oct_pages %}
+                                                                        <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M1.24923 10.1022C1.05723 10.1022 0.865201 10.0292 0.719201 9.88223C0.426201 9.58923 0.426201 9.11419 0.719201 8.82119L4.18917 5.35122L0.719201 1.88125C0.426201 1.58825 0.426201 1.11321 0.719201 0.820214C1.0122 0.527214 1.48724 0.527214 1.78024 0.820214L5.78024 4.82021C6.07324 5.11321 6.07324 5.58825 5.78024 5.88125L1.78024 9.88125C1.63324 10.0292 1.44123 10.1022 1.24923 10.1022Z"
+                                                                                fill="#003459"></path>
+                                                                        </svg>
+                                                                        <div class="ds-menu-catalog">
+                                                                            <div class="ds-sidebar-header d-flex align-items-center justify-content-between py-2 px-3 d-xl-none">
+                                                                                <div class="ds-sidebar-header-back fw-700 dark-text fsz-16 d-flex align-items-center"
+                                                                                    data-sidebar="catalogback">
+                                                                                    <svg class="me-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path d="M17.4979 4.9994C17.4979 5.4134 17.1619 5.7494 16.7479 5.7494H2.55895L5.27892 8.46937C5.57192 8.76237 5.57192 9.2374 5.27892 9.5304C5.13292 9.6764 4.94089 9.75037 4.74889 9.75037C4.55689 9.75037 4.36487 9.6774 4.21887 9.5304L0.218865 5.5304C0.149865 5.4614 0.095 5.37851 0.057 5.28651C-0.019 5.10351 -0.019 4.89651 0.057 4.71351C0.095 4.62151 0.149865 4.53837 0.218865 4.46937L4.21887 0.469369C4.51187 0.176369 4.9869 0.176369 5.2799 0.469369C5.5729 0.762369 5.5729 1.2374 5.2799 1.5304L2.55993 4.25037H16.7479C17.1619 4.24937 17.4979 4.5854 17.4979 4.9994Z"
+                                                                                            fill="#00171F" />
+                                                                                    </svg>
+                                                                                    {{ ch.name }}
+                                                                                </div>
+                                                                                <button type="button" class="button button-light br-10 ds-sidebar-close" data-sidebar="catalogclose" aria-label="Close">
+                                                                                    <svg class="me-0" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path d="M11.8029 10.8616C12.0633 11.122 12.0633 11.5442 11.8029 11.8046C11.6731 11.9344 11.5025 12.0001 11.3319 12.0001C11.1612 12.0001 10.9906 11.9352 10.8608 11.8046L5.99911 6.94288L1.13743 11.8046C1.00766 11.9344 0.837017 12.0001 0.666369 12.0001C0.495722 12.0001 0.325075 11.9352 0.195312 11.8046C-0.0651039 11.5442 -0.0651039 11.122 0.195312 10.8616L5.057 5.9999L0.195312 1.13824C-0.0651039 0.877827 -0.0651039 0.45562 0.195312 0.195205C0.455727 -0.0652107 0.877907 -0.0652107 1.13832 0.195205L6.00001 5.05692L10.8617 0.195205C11.1221 -0.0652107 11.5443 -0.0652107 11.8047 0.195205C12.0651 0.45562 12.0651 0.877827 11.8047 1.13824L6.943 5.9999L11.8029 10.8616Z"
+                                                                                            fill="#00A8E8" />
+                                                                                    </svg>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="ds-menu-catalog-inner">
+                                                                                <ul class="ds-menu-catalog-items">
+                                                                                    {% for child in ch.children %}
+                                                                                        <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                                                                            <a href="{{ child.href }}" class="flex-grow-1">{{ child.name }}</a>
+                                                                                        </li>
+                                                                                    {% endfor %}
+                                                                                    {% if ch.oct_pages %}
+                                                                                        <li class="ds-menu-list-landings">
+                                                                                            <ul>
+                                                                                                {% for oct_page in ch.oct_pages %}
+                                                                                                    {% if oct_page.page_links is not empty %}
+                                                                                                    <li class="d-flex flex-column ">
+                                                                                                        <span class="ds-megamenu-children-title fw-700 mb-2">{{ oct_page.page_group[language_id] }}</span>
+                                                                                                        {% for page_link in oct_page.page_links %}
+                                                                                                        <a href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}" class="ds-menu-list-landings-link fsz-14">{{ page_link[language_id].title }}</a>
+                                                                                                        {% endfor %}
+                                                                                                    </li>
+                                                                                                    {% endif %}
+                                                                                                {% endfor %}
+                                                                                            </ul>
+                                                                                        </li>
+                                                                                    {% endif %}
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </li>
+                                                            {% endfor %}
+                                                            {% if child.oct_pages %}
+                                                                <li class="ds-menu-list-landings">
+                                                                    <ul>
+                                                                        {% for oct_page in child.oct_pages %}
+                                                                            {% if oct_page.page_links is not empty %}
+                                                                            <li class="d-flex flex-column">
+                                                                                <span class="ds-megamenu-children-title fw-700 mb-2">{{ oct_page.page_group[language_id] }}</span>
+                                                                                {% for page_link in oct_page.page_links %}
+                                                                                <a href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}" class="ds-menu-list-landings-link fsz-14">{{ page_link[language_id].title }}</a>
+                                                                                {% endfor %}
+                                                                            </li>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </li>
+                                                            {% endif %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                    {% if oct_category.oct_pages %}
+                                        <li class="ds-menu-list-landings">
+                                            <ul>
+                                                {% for oct_page in oct_category.oct_pages %}
+                                                    {% if oct_page.page_links is not empty %}
+                                                    <li class="d-flex flex-column">
+                                                        <span class="ds-megamenu-children-title fw-700 mb-2">{{ oct_page.page_group[language_id] }}</span>
+                                                        {% for page_link in oct_page.page_links %}
+                                                        <a href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}" class="ds-menu-list-landings-link fsz-14">{{ page_link[language_id].title }}</a>
+                                                        {% endfor %}
+                                                    </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% elseif oct_category.view == '2' %}
+                            <div class="ds-megamenu-child-wrapper">
+                                <div class="d-flex flex-column flex-xl-row p-3">
+                                    {% if oct_category.oct_pages %}
+                                        <div class="col-xl-3 p-3 p-xl-0">
+                                            {% for oct_pages in oct_category.oct_pages %}
+                                                {% for oct_page in oct_pages %}
+                                                    <ul class="ds-menu-list-landings dark-text mb-4 pe-xl-3">
+                                                        <li class="d-flex flex-column">
+                                                            {% if oct_page.page_links is not empty %}
+                                                                <span class="ds-megamenu-children-title fw-700">{{ oct_page.page_group[language_id] }}</span>
+                                                                {% for page_link in oct_page.page_links %}
+                                                                    <a class="ds-menu-list-landings-link fsz-14" href="{{ page_link[language_id].link }}" title="{{ page_link[language_id].title }}">{{ page_link[language_id].title }}</a>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </li>
+                                                    </ul>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="ds-megamenu-children flex-grow-1 d-flex flex-wrap dark-text px-3 px-xl-0">
+                                        {% if oct_category.children %}
+                                            {% for child in oct_category.children %}
+                                                <div class="ds-megamenu-children-item">
+                                                    {% if child.oct_image %}
+                                                        <a href="{{ child.href }}" title="{{ child.name }}" class="ds-megamenu-children-title fw-600 mb-2 d-flex align-items-center mb-3">
+                                                            {% if child.oct_image %}
+                                                                <img class="me-3" src="{{ child.oct_image }}" alt="{{ oct_category.name }}" width="{{ oct_category.subcat_image_width }}" height="{{ oct_category.subcat_image_height }}" loading="lazy" />
+                                                            {% endif %}
+                                                            <span class="fsz-14">{{ child.name }}</span>
+                                                        </a>
+                                                    {% else %}
+                                                        <a href="{{ child.href }}" title="{{ child.name }}" class="ds-megamenu-children-title fw-600 mb-3 d-block">{{ child.name }}</a>
+                                                    {% endif %}
+                                                    {% if child.children %}
+                                                        <ul class="list-unstyled fsz-14">
+                                                            {% for ch in child.children %}
+                                                                <li class="my-1">
+                                                                    <a href="{{ ch.href }}" title="{{ ch.name }}">{{ ch.name }}</a>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% endif %}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% elseif oct_category.children and oct_category.type == 'oct_blogcategory' %}
+                    <div class="ds-menu-maincategories-dropdown position-absolute ds-menu-maincategories-dropdown-narrow ds-menu-maincategories-dropdown-blog">
+                        <div class="ds-sidebar-header d-flex align-items-center justify-content-between py-2 px-3 d-xl-none">
+                            <div class="ds-sidebar-header-back fw-700 dark-text fsz-16 d-flex align-items-center" data-sidebar="catalogback">
+                                <svg class="me-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.4979 4.9994C17.4979 5.4134 17.1619 5.7494 16.7479 5.7494H2.55895L5.27892 8.46937C5.57192 8.76237 5.57192 9.2374 5.27892 9.5304C5.13292 9.6764 4.94089 9.75037 4.74889 9.75037C4.55689 9.75037 4.36487 9.6774 4.21887 9.5304L0.218865 5.5304C0.149865 5.4614 0.095 5.37851 0.057 5.28651C-0.019 5.10351 -0.019 4.89651 0.057 4.71351C0.095 4.62151 0.149865 4.53837 0.218865 4.46937L4.21887 0.469369C4.51187 0.176369 4.9869 0.176369 5.2799 0.469369C5.5729 0.762369 5.5729 1.2374 5.2799 1.5304L2.55993 4.25037H16.7479C17.1619 4.24937 17.4979 4.5854 17.4979 4.9994Z"
+                                        fill="#00171F" />
+                                </svg>
+                                {{ oct_category.name }}
+                            </div>
+                            <button type="button" class="button button-light br-10 ds-sidebar-close" data-sidebar="catalogclose" aria-label="Close">
+                                <svg class="me-0" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.8029 10.8616C12.0633 11.122 12.0633 11.5442 11.8029 11.8046C11.6731 11.9344 11.5025 12.0001 11.3319 12.0001C11.1612 12.0001 10.9906 11.9352 10.8608 11.8046L5.99911 6.94288L1.13743 11.8046C1.00766 11.9344 0.837017 12.0001 0.666369 12.0001C0.495722 12.0001 0.325075 11.9352 0.195312 11.8046C-0.0651039 11.5442 -0.0651039 11.122 0.195312 10.8616L5.057 5.9999L0.195312 1.13824C-0.0651039 0.877827 -0.0651039 0.45562 0.195312 0.195205C0.455727 -0.0652107 0.877907 -0.0652107 1.13832 0.195205L6.00001 5.05692L10.8617 0.195205C11.1221 -0.0652107 11.5443 -0.0652107 11.8047 0.195205C12.0651 0.45562 12.0651 0.877827 11.8047 1.13824L6.943 5.9999L11.8029 10.8616Z"
+                                        fill="#00A8E8" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="ds-menu-catalog-inner">
+                            <ul class="ds-menu-catalog-items">
+                                {% for child in oct_category.children %}
+                                    <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                        <a href="{{ child.href }}">{{ child.name }}</a>
+                                        {% if child.children %}
+                                             <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1.24923 10.1022C1.05723 10.1022 0.865201 10.0292 0.719201 9.88223C0.426201 9.58923 0.426201 9.11419 0.719201 8.82119L4.18917 5.35122L0.719201 1.88125C0.426201 1.58825 0.426201 1.11321 0.719201 0.820214C1.0122 0.527214 1.48724 0.527214 1.78024 0.820214L5.78024 4.82021C6.07324 5.11321 6.07324 5.58825 5.78024 5.88125L1.78024 9.88125C1.63324 10.0292 1.44123 10.1022 1.24923 10.1022Z"
+                                                        fill="#003459"></path>
+                                                </svg>
+                                            <div class="ds-menu-catalog">
+                                                <div class="ds-sidebar-header d-flex align-items-center justify-content-between py-2 px-3 d-xl-none">
+                                                    <div class="ds-sidebar-header-back fw-700 dark-text fsz-16 d-flex align-items-center" data-sidebar="catalogback">
+                                                        <svg class="me-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M17.4979 4.9994C17.4979 5.4134 17.1619 5.7494 16.7479 5.7494H2.55895L5.27892 8.46937C5.57192 8.76237 5.57192 9.2374 5.27892 9.5304C5.13292 9.6764 4.94089 9.75037 4.74889 9.75037C4.55689 9.75037 4.36487 9.6774 4.21887 9.5304L0.218865 5.5304C0.149865 5.4614 0.095 5.37851 0.057 5.28651C-0.019 5.10351 -0.019 4.89651 0.057 4.71351C0.095 4.62151 0.149865 4.53837 0.218865 4.46937L4.21887 0.469369C4.51187 0.176369 4.9869 0.176369 5.2799 0.469369C5.5729 0.762369 5.5729 1.2374 5.2799 1.5304L2.55993 4.25037H16.7479C17.1619 4.24937 17.4979 4.5854 17.4979 4.9994Z"
+                                                                fill="#00171F" />
+                                                        </svg>
+                                                        {{ child.name }}
+                                                    </div>
+                                                    <button type="button" class="button button-light br-10 ds-sidebar-close" data-sidebar="catalogclose" aria-label="Close">
+                                                        <svg class="me-0" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M11.8029 10.8616C12.0633 11.122 12.0633 11.5442 11.8029 11.8046C11.6731 11.9344 11.5025 12.0001 11.3319 12.0001C11.1612 12.0001 10.9906 11.9352 10.8608 11.8046L5.99911 6.94288L1.13743 11.8046C1.00766 11.9344 0.837017 12.0001 0.666369 12.0001C0.495722 12.0001 0.325075 11.9352 0.195312 11.8046C-0.0651039 11.5442 -0.0651039 11.122 0.195312 10.8616L5.057 5.9999L0.195312 1.13824C-0.0651039 0.877827 -0.0651039 0.45562 0.195312 0.195205C0.455727 -0.0652107 0.877907 -0.0652107 1.13832 0.195205L6.00001 5.05692L10.8617 0.195205C11.1221 -0.0652107 11.5443 -0.0652107 11.8047 0.195205C12.0651 0.45562 12.0651 0.877827 11.8047 1.13824L6.943 5.9999L11.8029 10.8616Z"
+                                                                fill="#00A8E8" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div class="ds-menu-catalog-inner">
+                                                    <ul class="ds-menu-catalog-items">
+                                                        {% for ch in child.children %}
+                                                            <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                                                <a class="flex-grow-1" href="{{ ch.href }}">{{ ch.name }}</a>
+                                                                {% if ch.children %}
+                                                                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M1.24923 10.1022C1.05723 10.1022 0.865201 10.0292 0.719201 9.88223C0.426201 9.58923 0.426201 9.11419 0.719201 8.82119L4.18917 5.35122L0.719201 1.88125C0.426201 1.58825 0.426201 1.11321 0.719201 0.820214C1.0122 0.527214 1.48724 0.527214 1.78024 0.820214L5.78024 4.82021C6.07324 5.11321 6.07324 5.58825 5.78024 5.88125L1.78024 9.88125C1.63324 10.0292 1.44123 10.1022 1.24923 10.1022Z"
+                                                                            fill="#003459"></path>
+                                                                    </svg>
+                                                                    <div class="ds-menu-catalog">
+                                                                        <div class="ds-sidebar-header d-flex align-items-center justify-content-between py-2 px-3 d-xl-none">
+                                                                            <div class="ds-sidebar-header-back fw-700 dark-text fsz-16 d-flex align-items-center"
+                                                                                data-sidebar="catalogback">
+                                                                                <svg class="me-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path d="M17.4979 4.9994C17.4979 5.4134 17.1619 5.7494 16.7479 5.7494H2.55895L5.27892 8.46937C5.57192 8.76237 5.57192 9.2374 5.27892 9.5304C5.13292 9.6764 4.94089 9.75037 4.74889 9.75037C4.55689 9.75037 4.36487 9.6774 4.21887 9.5304L0.218865 5.5304C0.149865 5.4614 0.095 5.37851 0.057 5.28651C-0.019 5.10351 -0.019 4.89651 0.057 4.71351C0.095 4.62151 0.149865 4.53837 0.218865 4.46937L4.21887 0.469369C4.51187 0.176369 4.9869 0.176369 5.2799 0.469369C5.5729 0.762369 5.5729 1.2374 5.2799 1.5304L2.55993 4.25037H16.7479C17.1619 4.24937 17.4979 4.5854 17.4979 4.9994Z"
+                                                                                        fill="#00171F" />
+                                                                                </svg>
+                                                                                {{ ch.name }}
+                                                                            </div>
+                                                                            <button type="button" class="button button-light br-10 ds-sidebar-close" data-sidebar="catalogclose" aria-label="Close">
+                                                                                <svg class="me-0" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path d="M11.8029 10.8616C12.0633 11.122 12.0633 11.5442 11.8029 11.8046C11.6731 11.9344 11.5025 12.0001 11.3319 12.0001C11.1612 12.0001 10.9906 11.9352 10.8608 11.8046L5.99911 6.94288L1.13743 11.8046C1.00766 11.9344 0.837017 12.0001 0.666369 12.0001C0.495722 12.0001 0.325075 11.9352 0.195312 11.8046C-0.0651039 11.5442 -0.0651039 11.122 0.195312 10.8616L5.057 5.9999L0.195312 1.13824C-0.0651039 0.877827 -0.0651039 0.45562 0.195312 0.195205C0.455727 -0.0652107 0.877907 -0.0652107 1.13832 0.195205L6.00001 5.05692L10.8617 0.195205C11.1221 -0.0652107 11.5443 -0.0652107 11.8047 0.195205C12.0651 0.45562 12.0651 0.877827 11.8047 1.13824L6.943 5.9999L11.8029 10.8616Z"
+                                                                                        fill="#00A8E8" />
+                                                                                </svg>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="ds-menu-catalog-inner">
+                                                                            <ul class="ds-menu-catalog-items">
+                                                                                {% for ch2 in ch.children %}
+                                                                                    <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                                                                        <a class="flex-grow-1" href="{{ ch2.href }}">{{ ch2.name }}</a>
+                                                                                    </li>
+                                                                                {% endfor %}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% elseif oct_category.children and oct_category.type == 'manufacturer' %}
+                    <div class="ds-menu-maincategories-dropdown position-absolute{% if not oct_category.show_image %} ds-menu-maincategories-dropdown-narrow{% endif %}">
+                        <div class="ds-sidebar-header d-flex align-items-center justify-content-between py-2 px-3 d-xl-none">
+                            <div class="ds-sidebar-header-back fw-700 dark-text fsz-16 d-flex align-items-center" data-sidebar="catalogback">
+                                <svg class="me-2" width="18" height="10" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.4979 4.9994C17.4979 5.4134 17.1619 5.7494 16.7479 5.7494H2.55895L5.27892 8.46937C5.57192 8.76237 5.57192 9.2374 5.27892 9.5304C5.13292 9.6764 4.94089 9.75037 4.74889 9.75037C4.55689 9.75037 4.36487 9.6774 4.21887 9.5304L0.218865 5.5304C0.149865 5.4614 0.095 5.37851 0.057 5.28651C-0.019 5.10351 -0.019 4.89651 0.057 4.71351C0.095 4.62151 0.149865 4.53837 0.218865 4.46937L4.21887 0.469369C4.51187 0.176369 4.9869 0.176369 5.2799 0.469369C5.5729 0.762369 5.5729 1.2374 5.2799 1.5304L2.55993 4.25037H16.7479C17.1619 4.24937 17.4979 4.5854 17.4979 4.9994Z"
+                                        fill="#00171F" />
+                                </svg>
+                                {{ oct_category.name }}
+                            </div>
+                            <button type="button" class="button button-light br-10 ds-sidebar-close" data-sidebar="catalogclose" aria-label="Close">
+                                <svg class="me-0" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.8029 10.8616C12.0633 11.122 12.0633 11.5442 11.8029 11.8046C11.6731 11.9344 11.5025 12.0001 11.3319 12.0001C11.1612 12.0001 10.9906 11.9352 10.8608 11.8046L5.99911 6.94288L1.13743 11.8046C1.00766 11.9344 0.837017 12.0001 0.666369 12.0001C0.495722 12.0001 0.325075 11.9352 0.195312 11.8046C-0.0651039 11.5442 -0.0651039 11.122 0.195312 10.8616L5.057 5.9999L0.195312 1.13824C-0.0651039 0.877827 -0.0651039 0.45562 0.195312 0.195205C0.455727 -0.0652107 0.877907 -0.0652107 1.13832 0.195205L6.00001 5.05692L10.8617 0.195205C11.1221 -0.0652107 11.5443 -0.0652107 11.8047 0.195205C12.0651 0.45562 12.0651 0.877827 11.8047 1.13824L6.943 5.9999L11.8029 10.8616Z"
+                                        fill="#00A8E8" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="{% if oct_category.show_image %}ds-megamenu-child-wrapper{% else %}ds-menu-catalog-inner{% endif %}">
+                            {% if oct_category.show_image %}
+                                <div class="ds-megamenu-children ds-megamenu-children-manufacturers flex-grow-1 d-flex flex-wrap flex-column flex-xl-row dark-text p-xl-3">
+                                    {% for child in oct_category.children %}
+                                        <div class="ds-megamenu-children-item text-xl-center p-3">
+                                            <a href="{{ child.href }}" title="{{ child.name }}" class="ds-megamenu-children-title fw-700 d-flex flex-xl-column align-items-center px-3 py-2 p-xl-0">
+                                                {% if child.oct_image %}
+                                                    <img class="my-xl-2 me-3 mx-xl-auto" src="{{ child.oct_image }}" alt="{{ oct_category.name }}" width="{{ oct_category.subcat_image_width }}" height="{{ oct_category.subcat_image_height }}" loading="lazy" />
+                                                {% endif %}
+                                                <span class="flex-grow-1">{{ child.name }}</span>
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <ul class="ds-menu-catalog-items">
+                                    {% for child in oct_category.children %}
+                                        <li class="ds-menu-catalog-item d-flex align-items-center justify-content-between fsz-14 dark-text">
+                                            <a class="flex-grow-1" href="{{ child.href }}">{{ child.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            requestAnimationFrame(function() {
+                horizontalMenu();
+            });
+        });
+    </script>
+{% endif %}

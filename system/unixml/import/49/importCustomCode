@@ -1,0 +1,6 @@
+<?php
+//Этот файл - кастомный код модуля UniXML, Импорт id: 49
+//info: https://unixml.pro
+
+$product['stock_status_id'] = 5;
+$data['fields_p']['stock_status_id'] = 'stock_status_id';

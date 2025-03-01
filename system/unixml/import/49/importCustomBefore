@@ -1,0 +1,11 @@
+<?php
+//Этот файл - кастомный код модуля UniXML, Импорт id: 49
+//info: https://unixml.pro
+
+$data['lang_data'] = array(
+  'lang_id' => 3,
+  'fields'  => array(
+      'name' => 'name_ua',
+      'description' => 'description_ua'
+    )
+);

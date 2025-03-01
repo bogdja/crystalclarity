@@ -1,0 +1,17 @@
+.ocf-theme-light-block .ocf-search-btn-static, .ocf-theme-light-block .ocf-search-btn-popover, .ocf-theme-light-block .ocf-search-btn-static.ocf-disabled, .ocf-theme-light-block .ocf-search-btn-popover.ocf-disabled, .ocf-noUi-connect:before, .ocf-noUi-handle {background-color:rgb(46, 42, 51) !important;}
+:root {--ds-primary-color:rgb(46, 42, 51);}
+:root {--ds-body-bg-light-color:rgb(248, 247, 244);}
+:root {--ds-links-color:rgb(92, 75, 108);}
+.light-theme .ds-header {background:rgb(255, 255, 255);}
+.ds-dropdown-links .blue-link, .ds-switcher button {color:rgb(0, 0, 0);}
+.ds-dropdown-links .blue-link:hover {color:rgb(199, 179, 242);}
+:root {--ds-footer-bg-light-color:rgb(45, 40, 51);}
+.light-theme .ds-footer-subscribe-text, .light-theme .ds-footer-item .secondary-text, .light-theme .ds-footer-socials .secondary-text {color:rgb(208, 217, 204);}
+.ds-footer .blue-link {color:rgb(233, 201, 242);}
+.ds-footer .blue-link:hover {color:rgb(233, 201, 242);}
+.light-theme .ds-footer-links li a, .light-theme ul.ds-footer-item li a {color:rgb(184, 174, 198);}
+.ds-footer-links li a:hover, ul.ds-footer-item li a:hover {color:rgb(233, 201, 242);}
+.light-theme .ds-footer-item-title {color:rgb(255, 255, 255);}
+.light-theme .ds-footer-item-title svg path {fill:rgb(255, 255, 255);}
+:root {--ds-interactive-color:rgb(255, 255, 255);}
+.ds-price-new.red-text {color:rgb(46, 42, 51);}
